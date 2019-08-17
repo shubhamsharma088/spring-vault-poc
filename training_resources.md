@@ -1,0 +1,1 @@
+##### https://www.katacoda.com/hashicorp/scenarios/vault-static-secrets

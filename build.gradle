@@ -1,0 +1,75 @@
+plugins {
+    id 'org.springframework.boot' version '2.1.7.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.7.RELEASE'
+    id 'java'
+    id 'idea'
+}
+
+group = 'org.shubham'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    set('springCloudVersion', "Greenwich.SR2")
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.cloud:spring-cloud-starter-vault-config'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+task startDocker(type: Exec) {
+    //on linux
+    commandLine './scripts/start_docker_vault.sh'
+
+    //store the output instead of printing to the console:
+    standardOutput = new ByteArrayOutputStream()
+
+    //extension method stopTomcat.output() can be used to obtain the output:
+    ext.output = {
+        return standardOutput.toString()
+    }
+}
+
+task stopDocker(type: Exec) {
+
+    //on linux
+    commandLine './scripts/stop_docker_vault.sh'
+
+    //store the output instead of printing to the console:
+    standardOutput = new ByteArrayOutputStream()
+
+    //extension method stopTomcat.output() can be used to obtain the output:
+    ext.output = {
+        return standardOutput.toString()
+    }
+}
+
+startDocker.dependsOn stopDocker
+bootRun.dependsOn startDocker
