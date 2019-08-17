@@ -1,0 +1,64 @@
+{
+	"info": {
+		"_postman_id": "84a8dbd7-5dfa-45cf-8f3f-594c09dd256c",
+		"name": "spring-vault-collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create credentials",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"path\": \"myapp\",\n    \"credentials\": {\n        \"username\": \"shubham1\",\n        \"password\": \"password2\"\n    }\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get credentials from path",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/path/myapp",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"path",
+						"myapp"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
