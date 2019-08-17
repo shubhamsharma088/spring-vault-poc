@@ -45,30 +45,11 @@ dependencyManagement {
 }
 
 task startDocker(type: Exec) {
-    //on linux
     commandLine './scripts/start_docker_vault.sh'
-
-    //store the output instead of printing to the console:
-    standardOutput = new ByteArrayOutputStream()
-
-    //extension method stopTomcat.output() can be used to obtain the output:
-    ext.output = {
-        return standardOutput.toString()
-    }
 }
 
 task stopDocker(type: Exec) {
-
-    //on linux
     commandLine './scripts/stop_docker_vault.sh'
-
-    //store the output instead of printing to the console:
-    standardOutput = new ByteArrayOutputStream()
-
-    //extension method stopTomcat.output() can be used to obtain the output:
-    ext.output = {
-        return standardOutput.toString()
-    }
 }
 
 startDocker.dependsOn stopDocker
